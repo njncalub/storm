@@ -7,8 +7,8 @@
         {% block title %}
         {% endblock title %}
     </title>
-    
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
 
     {% block otherblock %}
     {% endblock otherblock %}
@@ -54,24 +54,13 @@
 
     <div class="container">
         {% block content %}
-        <center>
-        <div class="site-header"><p><img src="img/storm_header.png" /></p></div>
-        <p><b>The STRATEGIC TACTICS, OPERATIONS, RETRIEVAL, and MANAGEMENT webapp.</b></p>
-        </center>
-
-        <br />
-        <br />
-        <br />
         
-        <div class="row">
-          <div class="col-md-4"><center><img src="img/options/report.png" /></center></div>
-          <div class="col-md-4"><center><img src="img/options/retrieve.png" /></center></div>
-          <div class="col-md-4"><center><img src="img/options/relief.png" /></center></div>
-        </div>
         {% endblock content %}
-    </div>
+    </div> <!--container-->
+
     <script src="https://code.jquery.com/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+
     {% block extrajsbottom %}
     {% endblock extrajsbottom %}
 </body>
