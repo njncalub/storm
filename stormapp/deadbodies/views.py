@@ -1,10 +1,13 @@
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse, HttpResponseRedirect
+from django.template import RequestContext
 from django.shortcuts import render, render_to_response
 from stormapp.deadbodies.models import DeadBody
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the index.")
+def home_view(request):
+    context = {}
+    return render_to_response('index.html', context, context_instance=RequestContext(request))
+    #return HttpResponse("Hello, world. You're at the index.")
 
 def report_dead_body(request):
     context = {}
@@ -19,7 +22,7 @@ def report_dead_body(request):
     else:
         context['dead_body_form'] = DeadBodyForm()
 
-    return render_to_response('deadbodies/' )
+    return render_to_response('deadbodies/report_dead_body.html', context, context_instance=RequestContext(request) )
 
 def view_all_dead_body(request):
     pass

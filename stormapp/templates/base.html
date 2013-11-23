@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>
+        {% block title %}
+        {% endblock title %}
+    </title>
+
+    {% block extracss %}
+    {% endblock extracss %}
+
+    {% block extrajstop %}
+    {% endblock extrajstop %}
+</head>
+<body>
+    {% block content %}
+    {% endblock content %}
+
+    {% block extrajsbottom %}
+    {% endblock extrajsbottom %}
+</body>
+</html>
