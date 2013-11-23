@@ -9,6 +9,10 @@ def home_view(request):
     return render_to_response('index.html', context, context_instance=RequestContext(request))
     #return HttpResponse("Hello, world. You're at the index.")
 
+def sample_map_view(request):
+    context = {}
+    return render_to_response('sample_map.html', context, context_instance=RequestContext(request))
+
 def report_dead_body(request):
     context = {}
 
