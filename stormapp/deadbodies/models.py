@@ -22,8 +22,8 @@ class DeadBody(models.Model):
         return os.path.join("uploaded", "images", new_name)
 
     location = models.CharField(max_length=255, null=True, blank=True, verbose_name="Location")
-    nlong = models.FloatField(null=True, blank=True)
-    nlat = models.FloatField(null=True, blank=True)
+    #nlong = models.FloatField(null=True, blank=True)
+    #nlat = models.FloatField(null=True, blank=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='U')
     image = models.ImageField("Uploaded Image", upload_to=get_upload_path, null=True, blank=True, max_length=150)
     date_reported = models.DateTimeField('Date Reported', auto_now_add=True)
