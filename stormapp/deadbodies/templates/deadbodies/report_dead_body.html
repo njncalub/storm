@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Report a dead body{% endblock title %}
+{% block content %}
+
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+{{ dead_body_form.as_p }}
+<input type="submit" value="Submit" />
+</form>
+
+{% endblock content %}

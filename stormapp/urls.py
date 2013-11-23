@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from stormapp.deadbodies.views import home_view, sample_map_view, report_dead_body, view_all_dead_body
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf import settings
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -19,3 +20,9 @@ urlpatterns += patterns('',
 )
 
 urlpatterns += staticfiles_urlpatterns()
+
+urlpatterns += patterns('',
+        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+            'document_root': settings.MEDIA_ROOT,
+        }),
+   )
