@@ -29,3 +29,6 @@ class DeadBody(models.Model):
 
     def __unicode__(self):
         return self.gender + " at " + self.location
+
+    class Meta:
+        verbose_name_plural = "dead bodies"
