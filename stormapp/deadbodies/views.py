@@ -46,6 +46,7 @@ def report_dead_body(request):
 
     return render_to_response('deadbodies/report_dead_body.html', context, context_instance=RequestContext(request) )
 
+
 def view_all_dead_body(request):
     context = {}
 
@@ -57,3 +58,9 @@ def view_all_dead_body(request):
         print d.image
 
     return render_to_response('deadbodies/view_all_dead_bodies.html', context, context_instance=RequestContext(request) )
+
+
+def retrieve_body(request):
+    context = {}
+
+    pass
