@@ -3,7 +3,7 @@
 from os.path import dirname, abspath
 ROOT = dirname(abspath(__file__)).replace('\\', '/') + '/'
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
