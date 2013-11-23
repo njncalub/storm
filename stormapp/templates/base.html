@@ -9,9 +9,15 @@
     </title>
 
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     {% block otherblock %}
     {% endblock otherblock %}
+
+    <style>
+      #header { background-color: #111; }
+      .navbar-nav >  li > a { padding-top: 20px; }
+    </style>
 
     {% block extracss %}
     {% endblock extracss %}
@@ -20,7 +26,7 @@
     {% endblock extrajstop %}
 </head>
 <body>
-    <nav class="navbar navbar-default" role="navigation">
+    <nav id="header" class="navbar navbar-default" role="navigation">
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -29,7 +35,8 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">STORM</a>
+          <a class="navbar-brand" href="/index/"><img src="http://i.imgur.com/reym4eR.png" /></a>
+
           </div>
         
           <!-- Collect the nav links, forms, and other content for toggling -->
