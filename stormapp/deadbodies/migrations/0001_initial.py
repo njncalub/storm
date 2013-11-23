@@ -12,6 +12,8 @@ class Migration(SchemaMigration):
         db.create_table('deadbodies_deadbody', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('location', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
+            ('nlong', self.gf('django.db.models.fields.DecimalField')(default=0.0, null=True, max_digits=15, decimal_places=5, blank=True)),
+            ('nlat', self.gf('django.db.models.fields.DecimalField')(default=0.0, null=True, max_digits=15, decimal_places=5, blank=True)),
             ('gender', self.gf('django.db.models.fields.CharField')(default='U', max_length=1)),
             ('image', self.gf('django.db.models.fields.files.ImageField')(max_length=150, null=True, blank=True)),
             ('date_reported', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
@@ -33,6 +35,8 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'image': ('django.db.models.fields.files.ImageField', [], {'max_length': '150', 'null': 'True', 'blank': 'True'}),
             'location': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'nlat': ('django.db.models.fields.DecimalField', [], {'default': '0.0', 'null': 'True', 'max_digits': '15', 'decimal_places': '5', 'blank': 'True'}),
+            'nlong': ('django.db.models.fields.DecimalField', [], {'default': '0.0', 'null': 'True', 'max_digits': '15', 'decimal_places': '5', 'blank': 'True'}),
             'status': ('django.db.models.fields.CharField', [], {'default': "'N'", 'max_length': '1'})
         }
     }
