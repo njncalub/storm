@@ -7,7 +7,8 @@
         {% block title %}
         {% endblock title %}
     </title>
-
+    
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     {% block extracss %}
     {% endblock extracss %}
 
@@ -15,9 +16,58 @@
     {% endblock extrajstop %}
 </head>
 <body>
-    {% block content %}
-    {% endblock content %}
+    <nav class="navbar navbar-default" role="navigation">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">STORM</a>
+          </div>
+        
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="index.html">STORM</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">The Team</a></li>
+                </ul>
+              </li>
+              <li><a href="#">Retrieval Operations</a></li>
+              <li><a href="#">Center Finder</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#">Login</a></li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </nav>
 
+    <div class="container">
+        {% block content %}
+        <center>
+        <div class="site-header"><p><img src="img/storm_header.png" /></p></div>
+        <p><b>The STRATEGIC TACTICS, OPERATIONS, RETRIEVAL, and MANAGEMENT webapp.</b></p>
+        </center>
+
+        <br />
+        <br />
+        <br />
+        
+        <div class="row">
+          <div class="col-md-4"><center><img src="img/options/report.png" /></center></div>
+          <div class="col-md-4"><center><img src="img/options/retrieve.png" /></center></div>
+          <div class="col-md-4"><center><img src="img/options/relief.png" /></center></div>
+        </div>
+        {% endblock content %}
+    </div>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     {% block extrajsbottom %}
     {% endblock extrajsbottom %}
 </body>
