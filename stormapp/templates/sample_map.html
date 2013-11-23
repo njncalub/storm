@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% block title %} Home {% endblock title %}
+{% block otherblock %}
+<meta http-equiv="X-UA-Compatible" content="IE=7; IE=EmulateIE9; IE=10" />
+        <base href="http://developer.here.com/apiexplorer/examples/api-for-js/map/zooming-the-map.html" />
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+        <title>Nokia Maps API for JavaScript Example: Zooming the map in & out</title>
+        <meta name="description" content="Changing the zoomlevel of the map view i.e. to city or street"/>
+        <meta name="keywords" content="zooming, map essentials, zoom"/>
+        <!-- For scaling content for mobile devices, setting the viewport to the width of the device-->
+        <meta name=viewport content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <!-- Styling for example container (NoteContainer & Logger)  -->
+        <link rel="stylesheet" type="text/css" href="http://developer.here.com/apiexplorer/examples/templates/js/exampleHelpers.css"/>
+        <!-- By default we add ?with=all to load every package available, it's better to change this parameter to your use case. Options ?with=maps|positioning|places|placesdata|directions|datarendering|all -->
+        <script type="text/javascript" charset="UTF-8" src="http://js.cit.api.here.com/se/2.5.3/jsl.js?with=all"></script>
+        <!-- JavaScript for example container (NoteContainer & Logger)  -->
+        <script type="text/javascript" charset="UTF-8" src="http://developer.here.com/apiexplorer/examples/templates/js/exampleHelpers.js"></script>
+        <style type="text/css">
+            html {
+                overflow:hidden;
+            }
+            
+            body {
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                width: 100%;
+                height: 100%;
+                position: absolute;
+            }
+            
+            #mapContainer {
+                width: 100%;
+                height: 100%;
+                left: 0;
+                top: 0;
+                position: absolute;
+            }
+        </style>
+{% endblock otherblock %}
+{% block content %}
+<div id="mapContainer"></div>
+        <div id="uiContainer"></div>
+        <script type="text/javascript" id="exampleJsSource">
+
+nokia.Settings.set("app_id", "nAfbi4Y91J7kNW9BtlrA"); 
+nokia.Settings.set("app_code", "E_Zr_J75eIBOUtMQOueIag");
+// Use staging environment (remove the line for production environment)
+nokia.Settings.set("serviceMode", "cit");
+
+// Get the DOM node to which we will append the map
+var mapContainer = document.getElementById("mapContainer");
+// Create a map inside the map container DOM node
+var map = new nokia.maps.map.Display(mapContainer, {
+    // Initial center and zoom level of the map
+    center: [11.33, 123.01],
+    zoomLevel: 10,
+    components: [
+        // ZoomBar provides a UI to zoom the map in & out
+        new nokia.maps.map.component.ZoomBar()
+    ]
+});
+
+/* We create a UI notecontainer for example description and controls
+ * NoteContainer is a UI helper function and not part of the Nokia Maps API
+ * See exampleHelpers.js for implementation details 
+ */
+var noteContainer = new NoteContainer({
+    id: "zoomingUi",
+    parent: document.getElementById("uiContainer"),
+    title: "Zooming the map",
+    content:
+        '<p>This example shows how to programmatically zoom the map in different ways</p>' + 
+        '<p>1: Zoom with setter method</p>' +
+        '<input id="zoomIn" type="button" value="zoom in"/>' +
+        '<input id="zoomOut" type="button" value="zoom out"/><br />' +
+        '<p>2: Zoom with setZoomLevel()</p>' +
+        '<p>Map zooms with 200 pixels in x,y position to topLeft corner of map view stays fixed.</p>' +
+        '<input id="zoomIn2" type="button" value="zoom in"/><br />' +
+        '<input id="zoomOut2" type="button" value="zoom out"/><br />' +
+        '<p>3: Zoom with zoomTo()</p>' +
+        '<p>Zoom the map with boundingBox:<br/>[52.5262, 13.3704], [52.5122, 13.4194]</p>' +
+        '<input id="zoomIn3" type="button" value="zoom to "/><br />'+
+        '<p id="center"></p>' +
+        '<p id="zoomlevel"></p>'
+});
+
+// Binding of DOM elements to several variables so we can install event handlers.
+var zoomInUiElt = document.getElementById("zoomIn"),
+    zoomOutUiElt = document.getElementById("zoomOut"),
+    centerUiElt = document.getElementById("center"),
+    zoomlevelUiElt = document.getElementById("zoomlevel"),
+    zoomIn2UiElt = document.getElementById("zoomIn2"),
+    zoomOut2UiElt = document.getElementById("zoomOut2"),
+    zoomIn3UiElt = document.getElementById("zoomIn3"),
+    zoomOutUi3Elt = document.getElementById("zoomOut3"),
+    bbox1 = new nokia.maps.geo.BoundingBox(
+        new nokia.maps.geo.Coordinate(52.5262, 13.3704),
+        new nokia.maps.geo.Coordinate(52.5122, 13.4194)
+    );
+            
+// Zooming map using map's set() by changing its zoomLevel.
+zoomInUiElt.onclick = function () {
+    /* map.set(x, y) takes two parameters;
+     *      - x: The key needs to be set.
+     *      - y: The new value to be set
+     *
+     * Example to set zoomlevel to level 4
+     * There are two other ways to specify a Coordinate:
+     * map.set("zoomLevel", 4);
+     */
+    map.set("zoomLevel", map.zoomLevel + 1);
+};
+
+zoomOutUiElt.onclick = function () {
+    /* Most of our map tile services support
+     * zoomlevel 0 till 20
+     * 
+     * To find out the minimum and maximum zoomlevel query:
+     *      - map.minZoomLevel
+     *      - map.maxZoomLevel
+     */
+    map.set("zoomLevel", map.zoomLevel - 1);
+};
+
+// Zooming map with the help of map's setZoomLevel().
+zoomIn2UiElt.onclick = function () {
+    /* Sets the zoom level to the specified value.
+     *
+     * setZoomLevel(level, animation, toX, toY) takes four arguments:
+     *      - level: The new zoom level to be set.
+     *      - animation: [Optional argument]. 
+     *          The animation to be used while
+     *          modifying the view, must be a value from the animation 
+     *          list. The list can be found in Display.animation
+     *      - [toX]: Optional argument. 
+     *          The x-position of the pixel relative to 
+     *          the top-left corner of the current view to stay fixed.
+     *      - [toY]: Optional argument. 
+     *          The y-position of the pixel relative to 
+     *          the top-left corner of the current view to stay fixed.
+     */
+    map.setZoomLevel(map.zoomLevel+1, "default",200, 200);
+};
+
+zoomOut2UiElt.onclick = function () {
+    map.setZoomLevel(map.zoomLevel - 1, "default", 200, 200);
+};
+
+// Zoom in/out using map's zoomTo()
+zoomIn3UiElt.onclick = function () {
+    /* Zooms the map to the given bounding box. If the keepCenter 
+     * flag is used, the size of the viewport will be increased 
+     * such that the original center is still located in the 
+     * center of the viewport. This operation may use a platform 
+     * specific animation if this is indicated by the corresponding 
+     * optional animation string.
+     *
+     * zoomTo(boundingBox, keepCenter, animation) takes three arguments:
+     *      - boundingBox: The bounding box that shall become visible in the view.
+     *      - [keepCenter]: Optional argument. 
+     *          Set to true to keep the view in same center, use false if the center is allowed change.
+     *      - [animation]: Optional argument. 
+     *              The animation to be used while modifying 
+     *              the view, must be a value from the animation list.
+     *              The list can be found in map.animation.
+     */
+    map.zoomTo(bbox1, false, "default");
+};
+
+// Set observers to update center and zoomlevel elements
+map.addObserver("center", function () {
+    centerUiElt.innerHTML = "<b>Center:</b> "+ map.center;
+});
+map.addObserver("zoomLevel", function () {
+    zoomlevelUiElt.innerHTML = "<b>Current zoomlevel:</b> "+ map.zoomLevel;
+});
+
+// Set start values for center and zoomlevel elements
+centerUiElt.innerHTML = "<b>Center:</b> "+ map.center;
+zoomlevelUiElt.innerHTML = "<b>Current zoomlevel:</b> "+ map.zoomLevel;
+        </script>
+{% endblock content %}
