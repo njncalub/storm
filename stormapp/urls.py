@@ -2,6 +2,7 @@ from django.conf.urls.defaults import patterns, include, url
 from django.http import HttpResponseRedirect
 from stormapp.deadbodies.views import home_view, sample_map_view, report_dead_body, view_all_dead_body
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -16,3 +17,5 @@ urlpatterns += patterns('',
     url(r'^view_all/$', view_all_dead_body),
     url(r'^$', lambda x: HttpResponseRedirect('/index/')),
 )
+
+urlpatterns += staticfiles_urlpatterns()
