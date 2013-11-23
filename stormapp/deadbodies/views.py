@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login
-from deadbodies.models import DeadBody
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
+from stormapp.deadbodies.models import DeadBody
 
 def index(request):
     return HttpResponse("Hello, world. You're at the index.")
