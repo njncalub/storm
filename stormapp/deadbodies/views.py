@@ -1,4 +1,4 @@
-from deadbodies.models import DeadBody
+from stormapp.deadbodies.models import DeadBody
 from django.http import HttpResponse
 
 def index(request):
