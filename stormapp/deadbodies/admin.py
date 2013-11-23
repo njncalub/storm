@@ -1,4 +1,4 @@
-from storm.deadbodies.models import DeadBody
 from django.contrib import admin
+from stormapp.deadbodies.models import DeadBody
 
 admin.site.register(DeadBody)
