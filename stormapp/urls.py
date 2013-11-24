@@ -16,7 +16,7 @@ urlpatterns += patterns('',
     url(r'^view_map/$', sample_map_view),
     url(r'^report/$', report_dead_body),
     url(r'^view_all/$', view_all_dead_body),
-    url(r'^retrieve/$', retrieve_body),
+    url(r'^retrieve/$', view_all_dead_body),
     url(r'^$', lambda x: HttpResponseRedirect('/index/')),
 )
 
