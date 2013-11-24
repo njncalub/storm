@@ -1,4 +1,4 @@
 from django.contrib import admin
-from stormapp.reliefOps.models import ReliefOps
+from stormapp.reliefops.models import ReliefOps
 
 admin.site.register(ReliefOps)
