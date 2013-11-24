@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% block title %}Report a dead body{% endblock title %}
+{% block otherblock %}
+<script>
+/*  Setup authentication app_id and app_code 
+*   WARNING: this is a demo-only key
+*   please register for an Evaluation, Base or Commercial key for use in your app.
+*   Just visit http://developer.here.com/get-started for more details. Thank you!
+*/
+nokia.Settings.set("app_id", "nAfbi4Y91J7kNW9BtlrA"); 
+nokia.Settings.set("app_code", "E_Zr_J75eIBOUtMQOueIag");
+// Use staging environment (remove the line for production environment)
+nokia.Settings.set("serviceMode", "cit");
+
+// Get the DOM node to which we will append the map
+var mapContainer = document.getElementById("mapContainer");
+
+// We create a new instance of InfoBubbles bound to a variable so we can call it later on
+var infoBubbles = new nokia.maps.map.component.InfoBubbles();
+
+// Create a map inside the map container DOM node
+var map = new nokia.maps.map.Display(mapContainer, {
+    // initial center and zoom level of the map
+    center: [52.51, 13.4],
+    zoomLevel: 10,
+    components:[
+        // We add the behavior component to allow panning / zooming of the map
+        new nokia.maps.map.component.Behavior(),
+        infoBubbles
+    ]
+});
+
+/* We create a new UI Loggger to display log messages
+ * Logger is a UI helper function and not part of the Nokia Maps API
+ * See exampleHelpers.js for implementation details 
+ */
+var addressClickedLogger = new Logger({
+    id: "addressClickedLogger",
+    parent: document.getElementById("uiContainer"),
+    title: "Address clicked log"
+});
+
+
+var addresses = [
+        "Philippines", // Brandenburger Tor
+    ],
+    // We will put our address markers into this container zo we can zoom in to the markers
+    addressesContainer = new nokia.maps.map.Container(),
+    marker,
+    searchCenter = new nokia.maps.geo.Coordinate(11.33, 123.01),
+    searchManager = nokia.places.search.manager,
+    i = 0 , 
+    len = addresses.length,
+    requests = addresses.length;
+    
+map.objects.add(addressesContainer);
+
+var processResults = function (data, requestStatus, requestId) {
+    // Data is instance of nokia.places.objects.Place 
+    var location = data.location;
+
+    window.alert(location);
+    // Ensure that we our request came back with valid result
+    if (requestStatus == "OK") {
+        // Create a new marker on the found location
+        marker = new nokia.maps.map.StandardMarker(location.position);
+        // Add marker to its container so it will be render
+        addressesContainer.objects.add(marker);
+        
+        /* We store the address from the location and name of the
+         * Place object in the marker so we can create an infoBubble 
+         * with this information on click.
+         */
+        marker.$address = location.address;
+        marker.$label = data.name;
+    }
+};
+
+
+/* Once the map is initialized and ready (an event that is fired only once),
+ * trigger a geocoding request.
+ */
+map.addListener("displayready", function () {
+    /* We use nokia.places.search.manager.geCode to translate
+     * the given address to a nokia.places.objects.Place which
+     * contains the longitude and latitude
+     */
+    for (; i < len; i++) {
+        searchManager.geoCode({
+            searchTerm: addresses[i],
+            onComplete: function (data, requestStatus, requestId) {
+                processResults(data, requestStatus, requestId);
+                requests--;
+                if (requests == 0) {
+                    map.zoomTo(addressesContainer.getBoundingBox());
+                }
+            }
+        });
+    }
+});
+
+/* We would like to add event listener on mouse click or finger tap so we check
+ * nokia.maps.dom.Page.browser.touch which indicates whether the used browser has a touch interface.
+ */
+var TOUCH = nokia.maps.dom.Page.browser.touch,
+    CLICK = TOUCH ? "tap" : "click";
+
+/* Instead of adding an event listener to every marker we are going 
+ * to use event delegation. We install one event handler on the 
+ * container that contains all of the markers. 
+ */
+addressesContainer.addListener(CLICK, function (evt) {
+    var marker = evt.target,
+        address = marker.$address,
+        label = marker.$label;
+    
+    // We clear the logger
+    addressClickedLogger.clear();
+    
+    if (marker instanceof nokia.maps.map.Marker) {
+        infoBubbles.openBubble(label, marker.coordinate);
+    }
+
+    addressClickedLogger.log(
+        "Clicked address: " + address.street + " " + address.houseNumber + ", " +
+        address.district + ", " + address.postalCode + " " +
+        address.county + ", " + address.country
+    );
+});
+
+
+/* We create a UI notecontainer for example description
+ * NoteContainer is a UI helper function and not part of the Nokia Maps API
+ * See exampleHelpers.js for implementation details 
+ */
+var noteContainer = new NoteContainer({
+    id: "addressesUi",
+    parent: document.getElementById("uiContainer"),
+    title: "Displaying addresses with markers",
+    content:
+        '<p>This example shows how to geocode mulitple addresses into markers on the map. ' +
+        'Click on a marker to display the address</p>'
+});
+</script>
+{% endblock otherblock %}
+
+{% block content %}
+
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+{{ dead_body_form.as_p }}
+<input type="submit" value="Submit" />
+</form>
+<!--
+<div id="mapContainer"></div>
+<div id="uiContainer"></div>
+-->
+{% endblock content %}
