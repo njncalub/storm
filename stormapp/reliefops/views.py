@@ -63,7 +63,7 @@ def view_all_relief_ops(request):
 def retrieve_reliefops(request):
     context = {}
 
-    pass Create your views here.
+    pass
 
 
 def center_finder(request):
