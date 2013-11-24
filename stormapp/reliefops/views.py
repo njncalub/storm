@@ -64,3 +64,9 @@ def retrieve_reliefops(request):
     context = {}
 
     pass Create your views here.
+
+
+def center_finder(request):
+    context = {}
+
+    return render_to_response('reliefops/center_finder.html', context, context_instance=RequestContext(request) )

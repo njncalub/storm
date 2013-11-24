@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Report a dead body{% endblock title %}
+{% block title %}Report Body | STORM{% endblock title %}
 {% block otherblock %}
 <script>
 /*  Setup authentication app_id and app_code 
@@ -145,6 +145,12 @@ var noteContainer = new NoteContainer({
 {% endblock otherblock %}
 
 {% block content %}
+
+{% if message %}
+<script type="text/javascript">
+window.alert("{{ message }}");
+</script>
+{% endif %}
 
 <form method="post" enctype="multipart/form-data">{% csrf_token %}
 {{ dead_body_form.as_p }}
