@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Retrieval Operations | STORM{% endblock title %}
 {% block otherblock %}
-<meta http-equiv="X-UA-Compatible" content="IE=7; IE=EmulateIE9; IE=10" />
+        <meta http-equiv="X-UA-Compatible" content="IE=7; IE=EmulateIE9; IE=10" />
         <!--<base href="http://developer.here.com/apiexplorer/examples/api-for-js/markers/styled-marker.html" />-->
         <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
         <meta name="description" content="Customize the style of a marker"/>
@@ -36,8 +36,48 @@
                 position: absolute;
             }
         </style>
+
+        <style type="text/css">
+        #nm_tooltip {
+          position: absolute;
+          color:blue;
+          background:white;
+          border: 1px solid black;
+          padding-left: 1em; 
+          padding-right: 1em; 
+          display: none;    
+          min-width: 120px;                       
+        }
+        </style>
+        <script type="text/javascript" charset="UTF-8" src="https://raw.github.com/heremaps/examples/master/maps_js/libs/tooltip.js"></script>
+
 {% endblock otherblock %}
+
+
 {% block content %}
+
+<script type="text/javascript">
+    var node = document.createElement("div");
+    node.className = 'nm_bubble_content';
+    node.id = 'nm_tooltip';
+    document.getElementById("mapContainer").appendChild(node);
+</script>
+
+<script type="text/javascript">
+    map.addListener("mouseover", function(evt) {
+        if (( evt.target.$tooltip === undefined) == false){
+            var tooltip = document.getElementById("nm_tooltip");
+            var target = evt.target;
+            tooltip.innerHTML =  target.$tooltip;
+            tooltip.style.display ='block';
+            tooltip.style.left = target.getDisplayBoundingBox(map).getCenter().x - (tooltip.offsetWidth/2);
+            tooltip.style.top =  target.getDisplayBoundingBox(map).bottomRight.y + 1;
+        }
+    );
+
+</script>
+
+
 <div id="mapContainer"></div>
         <div id="uiContainer"></div>
         <script type="text/javascript" id="exampleJsSource">
@@ -64,21 +104,27 @@ var map = new nokia.maps.map.Display(mapContainer, {
 
 // Create several StandardMarkers with the properties object defined above and placed around the map center
 
+var center;
+var marker;
 
 {% for dead_body in dead_bodies %}
 
-// var custom_tooltip = '<div>' +
-//        '<h2>Tooltip with HTML content</h2>' +
-//        '<img width=120 height=90 src="/media/' + {{ dead_body.image }} + '" alt=""/><br/></div>';
-
-var center = new nokia.maps.geo.Coordinate({{ dead_body.nlat }}, {{ dead_body.nlong }});
-//var marker = new nokia.maps.map.StandardMarker(center);
-//var marker = new nokia.maps.map.StandardMarker(center, {$tooltip : custom_tooltip});
-var marker = new nokia.maps.map.StandardMarker(center, {$tooltip : "{{ dead_body.gender }}" });
+center = new nokia.maps.geo.Coordinate({{ dead_body.nlat }}, {{ dead_body.nlong }});
+marker = new nokia.maps.map.StandardMarker(center, {
+    text: "{{ dead_body.gender }}",
+    visibility: true,
+    icon: "/media/{{ dead_body.image }}",
+    anchor: new nokia.maps.util.Point(32, 32),
+});
 map.objects.add(marker);
 
 {% endfor %}
 
 
 </script>
+
+
+
+
+
 {% endblock content %}
