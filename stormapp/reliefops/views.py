@@ -54,19 +54,10 @@ def view_all_relief_ops(request):
 
     context['rel_ops'] = rel_ops
 
-    for d in rel_ops:
-        print d.image
-
-    return render_to_response('reliefops/view_all_relief_ops.html', context, context_instance=RequestContext(request) )
+    return render_to_response('reliefops/center_finder.html', context, context_instance=RequestContext(request) )
 
 
 def retrieve_reliefops(request):
     context = {}
 
     pass
-
-
-def center_finder(request):
-    context = {}
-
-    return render_to_response('reliefops/center_finder.html', context, context_instance=RequestContext(request) )

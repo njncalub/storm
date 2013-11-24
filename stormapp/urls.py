@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.http import HttpResponseRedirect
 from stormapp.deadbodies.views import home_view, about_storm, about_team, sample_map_view, retrieve_body, report_dead_body, view_all_dead_body
-from stormapp.reliefops.views import center_finder
+from stormapp.reliefops.views import view_all_relief_ops
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
@@ -25,7 +25,7 @@ urlpatterns += patterns('',
 
 # reliefops
 urlpatterns += patterns('',
-    url(r'^relief/$', center_finder),
+    url(r'^relief/$', view_all_relief_ops),
 )
 
 urlpatterns += staticfiles_urlpatterns()
