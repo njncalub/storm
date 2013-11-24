@@ -36,6 +36,7 @@ def report_dead_body(request):
 
             dead_body.save()
             
+            context['message'] = "Thank you for reporting!"
             context['dead_body_form'] = DeadBodyForm()
             print 'valid'
         else:
@@ -64,3 +65,15 @@ def retrieve_body(request):
     context = {}
 
     pass
+
+
+def about_storm(request):
+    context = {}
+
+    return render_to_response('deadbodies/about_storm.html', context, context_instance=RequestContext(request) )
+
+
+def about_team(request):
+    context = {}
+
+    return render_to_response('deadbodies/about_team.html', context, context_instance=RequestContext(request) )

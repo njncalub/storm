@@ -146,6 +146,12 @@ var noteContainer = new NoteContainer({
 
 {% block content %}
 
+{% if message %}
+<script type="text/javascript">
+window.alert("{{ message }}");
+</script>
+{% endif %}
+
 <form method="post" enctype="multipart/form-data">{% csrf_token %}
 {{ dead_body_form.as_p }}
 <input type="submit" value="Submit" />

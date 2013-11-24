@@ -21,7 +21,7 @@ class DeadBody(models.Model):
         new_name = '%s.%s' % (str(uuid4().hex), extension)
         return os.path.join("uploaded", "images", new_name)
 
-    location = models.CharField(max_length=255, null=True, blank=True, verbose_name="Location")
+    location = models.CharField(max_length=255, verbose_name="Location")
     nlong = models.DecimalField(null=True, blank=True, decimal_places=5, max_digits=15, default=0.00)
     nlat = models.DecimalField(null=True, blank=True, decimal_places=5, max_digits=15, default=0.00)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='U')
