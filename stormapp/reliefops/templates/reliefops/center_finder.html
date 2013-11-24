@@ -64,6 +64,8 @@ var map = new nokia.maps.map.Display(mapContainer, {
 
 // Create several StandardMarkers with the properties object defined above and placed around the map center
 
+var center;
+var marker;
 
 {% for rel_op in rel_ops %}
 
@@ -71,10 +73,8 @@ var map = new nokia.maps.map.Display(mapContainer, {
 //        '<h2>Tooltip with HTML content</h2>' +
 //        '<img width=120 height=90 src="/media/' + {{ dead_body.image }} + '" alt=""/><br/></div>';
 
-var center = new nokia.maps.geo.Coordinate({{ rel_op.nlat }}, {{ rel_op.nlong }});
-//var marker = new nokia.maps.map.StandardMarker(center);
-//var marker = new nokia.maps.map.StandardMarker(center, {$tooltip : custom_tooltip});
-var marker = new nokia.maps.map.StandardMarker(center, {$tooltip : "{{ rel_op.location }}" });
+center = new nokia.maps.geo.Coordinate({{ rel_op.nlat }}, {{ rel_op.nlong }});
+marker = new nokia.maps.map.StandardMarker(center);
 map.objects.add(marker);
 
 {% endfor %}
